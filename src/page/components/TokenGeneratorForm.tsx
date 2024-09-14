@@ -1,11 +1,32 @@
 import { Box, Button, FormLabel, TextField } from '@mui/material';
-import * as React from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import { TokenFormProps } from '../../types/TokenForm';
+import { formFields } from '../fields';
 
-export interface IAppProps {}
+export interface IAppProps {
+  form: UseFormReturn<TokenFormProps, any, undefined>;
+  onSubmit: (values: any) => void;
+  onReset: () => void;
+}
 
 export default function TokenGeneratorForm(props: IAppProps) {
+  console.log(formFields);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = props.form;
+
+  const getNestedError = (path) => {
+    return path.split('.').reduce((acc, key) => acc && acc[key], errors);
+  };
   return (
-    <form action="" id="tg-form">
+    <form
+      action=""
+      id="tg-form"
+      onSubmit={handleSubmit(props.onSubmit)}
+      onReset={props.onReset}
+    >
       <Box
         sx={{
           display: 'flex',
@@ -18,18 +39,23 @@ export default function TokenGeneratorForm(props: IAppProps) {
           },
         }}
       >
-        <FormLabel htmlFor="tg-blue-prefix">Blue Token Prefix</FormLabel>
-        <TextField id="tg-blue-prefix"></TextField>
-        <FormLabel htmlFor="tg-blue-token">Blue Token Length</FormLabel>
-        <TextField id="tg-blue-token"></TextField>
-        <FormLabel htmlFor="tg-blue-token">Blue Token Per Row</FormLabel>
-        <TextField id="tg-blue-row"></TextField>
-        <FormLabel htmlFor="tg-blue-prefix">Red Token Prefix</FormLabel>
-        <TextField id="tg-blue-prefix"></TextField>
-        <FormLabel htmlFor="tg-blue-token">Red Token Length</FormLabel>
-        <TextField id="tg-blue-token"></TextField>
-        <FormLabel htmlFor="tg-blue-token">Red Token Per Row</FormLabel>
-        <TextField id="tg-blue-row"></TextField>
+        {formFields.map((field) => {
+          const error = getNestedError(field.name);
+          return (
+            <>
+              <FormLabel htmlFor={field.name}>{field.label}</FormLabel>
+              <TextField
+                id={field.name}
+                {...register(field.name as keyof TokenFormProps, {
+                  ...field.validations,
+                })}
+                error={!!error}
+                helperText={error?.message}
+              ></TextField>
+              {/* {!!errors[field.name] && <p>{errors[field.name]?.message}</p>} */}
+            </>
+          );
+        })}
         <Box
           sx={{
             display: 'flex',
