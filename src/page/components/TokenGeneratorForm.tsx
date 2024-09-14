@@ -10,7 +10,6 @@ export interface IAppProps {
 }
 
 export default function TokenGeneratorForm(props: IAppProps) {
-  console.log(formFields);
   const {
     register,
     handleSubmit,
@@ -52,7 +51,6 @@ export default function TokenGeneratorForm(props: IAppProps) {
                 error={!!error}
                 helperText={error?.message}
               ></TextField>
-              {/* {!!errors[field.name] && <p>{errors[field.name]?.message}</p>} */}
             </>
           );
         })}
