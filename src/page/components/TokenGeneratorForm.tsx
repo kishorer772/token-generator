@@ -38,10 +38,17 @@ export default function TokenGeneratorForm(props: IAppProps) {
           },
         }}
       >
-        {formFields.map((field) => {
+        {formFields.map((field, index) => {
           const error = getNestedError(field.name);
           return (
-            <>
+            <div
+              key={index}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+              }}
+            >
               <FormLabel htmlFor={field.name}>{field.label}</FormLabel>
               <TextField
                 id={field.name}
@@ -51,7 +58,7 @@ export default function TokenGeneratorForm(props: IAppProps) {
                 error={!!error}
                 helperText={error?.message}
               ></TextField>
-            </>
+            </div>
           );
         })}
         <Box

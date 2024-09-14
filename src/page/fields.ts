@@ -7,7 +7,7 @@ export const formFields = [
     },
   },
   {
-    label: 'Blue Token Length',
+    label: 'Number of Blue Tokens',
     name: 'blue.length',
     validations: {
       required: 'Blue Token Length Required',
@@ -36,7 +36,7 @@ export const formFields = [
     },
   },
   {
-    label: 'Red Token Length',
+    label: 'Number of Red Tokens',
     name: 'red.length',
     validations: {
       required: 'Red Token Length Required',

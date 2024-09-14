@@ -14,11 +14,7 @@ export default function TokenView(props: IAppProps) {
       {Array(+props.length)
         .fill(0)
         .map((_, index) => (
-          <Grid
-            size={12 / +props.perRow}
-            display="flex"
-            justifyContent="center"
-          >
+          <Grid size={12 / props.perRow} display="flex">
             <Box
               sx={{
                 backgroundColor: props.color,
